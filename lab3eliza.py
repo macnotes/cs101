@@ -1,30 +1,44 @@
+#!/usr/local/bin/python3
 
 
 def get_therapist_response(user_input):
+    
+    # Rule #1. Finding negative inputs and then responding to them
+    negative_list=["sad","disappointed","gloomy","distraught"]
+    for word in negative_list:
+        if word in user_input:
+            print("You're being very negative.")
+            return
+    
+    # Rule #2. Finding you in user input and making a response
+    if "you" in user_input:
+        bot_response = "Let's talk about you."
     # assigning a value to the variable prompt
-    if user_input.find("I'm"):
-        user_feeling = user_input[2:]
-    if user_input.find("I am"):
-        user_feeling = user_input[4:]
-    # importing random into the program
-    import random
-    # assigning a value to index
-    index = random.randint(0, 2)
-    # assigning value to response list
-    responses_list = ["Do you believe it is normal to be" + user_feeling + "?",
-                      "Why do you feel" + user_feeling + "?",
-                      "Do you know anybody who also feels" + user_feeling + "?"]
-    # assigning value to bot response
-    bot_response = responses_list[index]
-    # having the bot print the bot response
-    user_input = input(bot_response)
 
-    index = random.randint(0, 2)
-    responses_list = ["Do you say " + user_input + " for any particular reason?",
-                      "Do you know anyone else who would agree with you?",
-                      "So you say " + user_input + " but are you really sure?"]
-    # assigning a new value to the variable bot_response
-    bot_response = responses_list[index]
+    # Rule #3. if they tell us a feeling then we can respond to that
+    # elif makes it so the I am and the stuff above are mutually exclusive. 
+    elif user_input.find("I am"):
+        user_feeling = user_input[4:]
+        # importing random into the program
+        import random
+        # assigning a value to index
+        index = random.randint(0, 2)
+        # assigning value to response list
+        responses_list = ["Do you believe it is normal to be" + user_feeling + "? ",
+                          "Why do you feel" + user_feeling + "? ",
+                          "Do you know anybody who also feels" + user_feeling + "? "]
+        # assigning value to bot response
+        bot_response = responses_list[index]
+        # having the bot print the bot response
+        user_input = input(bot_response)
+
+        index = random.randint(0, 2)
+        responses_list = ["Do you say " + user_input + " for any particular reason? ",
+                          "Do you know anyone else who would agree with you? ",
+                          "So you say " + user_input + " but are you really sure? "]
+        # assigning a new value to the variable bot_response
+        bot_response = responses_list[index]
+
     # having the bot print bot response
     print(bot_response)
 
@@ -44,33 +58,30 @@ def discuss_weather():
     # assign a value to the user input variable by calling the function to ask the user a question
     user_input = input(prompt)
     # assign a value to the bot_response variable with literal text
-    bot_response = "Do you like that kind of weather?"
+    bot_response = "Do you like that kind of weather? "
     # call the function for displaying text in the console
     if "sun" in user_input or "bright" in user_input:
-        bot_response = "Does it make you happy to see the sun?"
-        print(bot_response)
+        bot_response = "Does it make you happy to see the sun? "
     # call the function for displaying text in the console
     if "snowy" in user_input or "blizzard" in user_input:
         bot_response = "Do you like snow, I sure don't."
-        print(bot_response)
     # call the function for displaying text in the console
     if "rain" in user_input or "pouring" in user_input:
-        bot_response = "So what do you think about rain?"
-        print(bot_response)
+        bot_response = "So what do you think about rain? "
     # call the function for displaying text in the console
     if "cloudy" in user_input or "overcast" in user_input:
         bot_response = "I hope it doesn't rain."
-        print(bot_response)
     # call the function for displaying text in the console
     if "cold" in user_input or "chilly" in user_input:
         bot_response = "I hope you have your coat!"
-        print(bot_response)
+
+    print(bot_response)
 
 
 # defining the function discuss_school_subjects
 def discuss_school_subjects():
-    inquiry = "What's your favorite subject in school?"
-    user_favorite_subject = input(inquiry)
+    inquiry = "What's your favorite subject in school? "
+    user_favorite_subject = input(inquiry).lower()
     # assigning a default value to the bot_reply variable
     bot_reply = "I've never heard of that class before."
     # lists of possible responses
@@ -81,10 +92,10 @@ def discuss_school_subjects():
     computer_response_list = ["computer science", "computer programming", "programming", "technology"]
     import random
     index = random.randint(0, 1)
-    math = ["Cool! Show me what maths you are doing sometime!", "What type of math is your favorite?"]
-    science = ["I know a lot about science", "Have you done some science today?"]
-    english = ["What is your favorite book then?", "Fun, I like english to."]
-    social_studies = ["Oh, social studies is great!", "What social studies class are you in?"]
+    math = ["Cool! Show me what maths you are doing sometime!", "What type of math is your favorite? "]
+    science = ["I know a lot about science", "Have you done some science today? "]
+    english = ["What is your favorite book then? ", "Fun, I like english to."]
+    social_studies = ["Oh, social studies is great!", "What social studies class are you in? "]
     computer = ["You must be having fun then!", "So I've been having a bit of a problem..."]
     none = ["That sucks!", "I hope you can find a class that you like."]
     # decision structure for the question
@@ -121,28 +132,44 @@ def discuss_music(user_name):
     print("See you later.")
 
 
+def ask_intro_questions():
+    print("Welcome. I'd like to get to know you a little better. ")
+    # first_name = input# ("What is your first name? ")
+    print("What is your first name? ")
+    first_name = input("> ")
+
+    discuss_weather()
+    discuss_school_subjects()
+    # discuss_music(first_name)
+    return first_name
+
 
 def main():
-  # initialize the Boolean to show that the chat is now on
-  user_talking = True
-  # Keep on talking to user as long as they are answering us/
-  stop_words=["stop","quit","done","exit","bye"]
-  while user_talking:   
-    #code to repeat will go in here; it's not ready yet
-    prompt = "How are you? What's your problem? (Start your answer with \"I am\")"
-    # assigning a value to user input
-    user_input = input(prompt)
 
-    if user_input not in stop_words:
-      get_therapist_response(user_input)
-      # discuss_weather()
-      # discuss_school_subjects()
-      # discuss_music("Elliot")
-    else:
-      # User wants to leave. 
-      # Set user_talking boolean to false to stop loop 
-      user_talking = False
-      print("Goodbye.")
+    first_name = ask_intro_questions()
+    print("Thanks for helping me get to know you a little better, " + first_name + "!")
+    print("")
+    print("I'd like to see how you're doing. Please enter \"done\" when you want to leave.")
+    print("")
+
+    # initialize the Boolean to show that the chat is now on
+    user_talking = True
+    # Keep on talking to user as long as they are answering us/
+    stop_words=["stop","quit","done","exit","bye"]
+
+    while user_talking:   
+      #code to repeat will go in here; it's not ready yet
+      print("Is there something you'd like to tell me? ")
+      # assigning a value to user input
+      user_input = input("> ").lower()
+
+      if user_input not in stop_words:
+        get_therapist_response(user_input)
+      else:
+        # User wants to leave. 
+        # Set user_talking boolean to false to stop loop 
+        user_talking = False
+        print("Goodbye.")
 
 
 if __name__ == '__main__':
